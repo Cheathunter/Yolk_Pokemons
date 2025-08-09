@@ -8,5 +8,7 @@ namespace Yolk_Pokemon.Application.Repositories
         Task<bool> CreateTrainerAsync(Trainer trainer, CancellationToken token = default);
 
         Task<Trainer?> GetTrainerByIdAsync(int id, CancellationToken token = default);
+
+        Task<bool> UpdateTrainerAsync(Trainer trainer, CancellationToken token = default);
     }
 }

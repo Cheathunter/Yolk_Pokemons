@@ -34,5 +34,20 @@ namespace Yolk_Pokemon.Api.Mapping
                 Pokemons = trainer.Pokemons
             };
         }
+
+        public static Trainer MapToTrainer(this UpdateTrainerRequest request, int id)
+        {
+            return new()
+            {
+                Id = id,
+                Name = request.Name,
+                Region = request.Region,
+                Age = request.Age,
+                CreatedAt = request.CreatedAt,
+                Wins = request.Wins,
+                Losses = request.Losses,
+                Pokemons = request.Pokemons
+            };
+        }
     }
 }
