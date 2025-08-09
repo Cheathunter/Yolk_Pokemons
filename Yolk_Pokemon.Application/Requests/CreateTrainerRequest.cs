@@ -11,11 +11,9 @@ namespace Yolk_Pokemon.Application.Requests
 
         public int? Age { get; init; }
 
-        public DateTime? CreatedAt { get; init; }
+        public int Wins { get; init; }
 
-        public int Wins { get; init; } = 0;
-
-        public int Losses { get; init; } = 0;
+        public int Losses { get; init; }
 
         public virtual ICollection<Pokemon> Pokemons { get; init; } = [];
     }

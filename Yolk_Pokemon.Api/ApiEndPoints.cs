@@ -1,6 +1,6 @@
 ﻿namespace Yolk_Pokemon.Api
 {
-    public class ApiEndPoints
+    public class ApiEndpoints
     {
         private const string ApiBase = "api";
 
