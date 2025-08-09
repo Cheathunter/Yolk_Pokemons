@@ -20,9 +20,19 @@ namespace Yolk_Pokemon.Application.Repositories
             return Task.FromResult(true);
         }
 
+        public Task<Pokemon?> GetPokemonByIdAsync(int id, CancellationToken token = default)
+        {
+            return Task.FromResult(_pokemons.GetValueOrDefault(id));
+        }
+
         public Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(CancellationToken cancellationToken = default)
         {
             return Task.FromResult((IEnumerable<Pokemon>)_pokemons.Values);
+        }
+
+        public Task UpdatePokemonAsync(Pokemon pokemon, CancellationToken token = default)
+        {
+            return Task.FromResult(_pokemons[pokemon.Id] = pokemon);
         }
     }
 }

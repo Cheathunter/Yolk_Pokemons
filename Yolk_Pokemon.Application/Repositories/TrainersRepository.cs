@@ -47,7 +47,7 @@ namespace Yolk_Pokemon.Application.Repositories
             return Task.FromResult(_trainers.Remove(id));
         }
 
-        public Task<int> GetLastTrainerId(CancellationToken token = default)
+        public Task<int> GetLastTrainerIdAsync(CancellationToken token = default)
         {
             if (_trainers.Count > 0)
             {
@@ -55,6 +55,11 @@ namespace Yolk_Pokemon.Application.Repositories
             }
 
             return Task.FromResult(0);
+        }
+
+        public Task<bool> PokemonAlreadyAddedAsync(int trainerId, int pokemonId, CancellationToken token = default)
+        {
+            return Task.FromResult(_trainers[trainerId].Pokemons.Any(x => x.Id == pokemonId));
         }
     }
 }

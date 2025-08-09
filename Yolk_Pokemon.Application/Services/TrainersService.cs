@@ -33,9 +33,9 @@ namespace Yolk_Pokemon.Application.Services
             return await _trainersRepository.DeleteByIdAsync(id, token);
         }
 
-        public async Task<int> GetNewTrainerId(CancellationToken token = default)
+        public async Task<int> GetNewTrainerIdAsync(CancellationToken token = default)
         {
-            return await _trainersRepository.GetLastTrainerId(token) + 1;
+            return await _trainersRepository.GetLastTrainerIdAsync(token) + 1;
         }
     }
 }

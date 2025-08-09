@@ -15,7 +15,7 @@ namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
             app.MapPost(ApiEndpoints.Trainers.Create, async (
                 CreateTrainerRequest request, ITrainersService trainerService, CancellationToken token) =>
             {
-                int trainerId = await trainerService.GetNewTrainerId(token);
+                int trainerId = await trainerService.GetNewTrainerIdAsync(token);
 
                 Trainer trainer = request.MapToTrainer(trainerId);
                 await trainerService.CreateTrainerAsync(trainer, token);
