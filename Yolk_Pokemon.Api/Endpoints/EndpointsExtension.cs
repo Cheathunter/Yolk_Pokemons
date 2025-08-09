@@ -8,6 +8,7 @@ namespace Yolk_Pokemon.Api.Endpoints
         {
             app.MapCreateTrainer();
             app.MapGetTrainer();
+            app.MapGetAllTrainers();
             app.MapUpdateTrainer();
             app.MapDeleteTrainer();
 

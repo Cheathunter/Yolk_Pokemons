@@ -24,6 +24,11 @@ namespace Yolk_Pokemon.Application.Repositories
             return Task.FromResult(_trainers.GetValueOrDefault(id));
         }
 
+        public Task<IEnumerable<Trainer>> GetAllTrainersAsync(CancellationToken token = default)
+        {
+            return Task.FromResult((IEnumerable<Trainer>)_trainers.Values);
+        }
+
         public Task<bool> UpdateTrainerAsync(Trainer trainer, CancellationToken token = default)
         {
             bool exists = _trainers.TryGetValue(trainer.Id, out _);

@@ -49,5 +49,13 @@ namespace Yolk_Pokemon.Api.Mapping
                 Pokemons = request.Pokemons
             };
         }
+
+        public static TrainersResponse MapToResponse(this IEnumerable<Trainer> responses)
+        {
+            return new TrainersResponse
+            {
+                Trainers = responses.Select(MapToResponse)
+            };
+        }
     }
 }
