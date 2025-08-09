@@ -10,6 +10,21 @@ namespace Yolk_Pokemon.Application.Services
         private readonly IPokemonsRepository _pokemonsRepository = pokemonsRepository;
         private readonly ITrainersRepository _trainersRepository = trainersRepository;
 
+        public async Task<bool> CreatePokemonAsync(Pokemon pokemon, CancellationToken cancellationToken = default)
+        {
+            return await _pokemonsRepository.CreatePokemonAsync(pokemon, cancellationToken);
+        }
+
+        public async Task<Pokemon?> GetPokemonByIdAsync(int id, CancellationToken token = default)
+        {
+            return await _pokemonsRepository.GetPokemonByIdAsync(id, token);
+        }
+
+        public async Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(CancellationToken cancellationToken = default)
+        {
+            return await _pokemonsRepository.GetAllPokemonsAsync(cancellationToken);
+        }
+
         public async Task<Trainer?> AddPokemonToTrainer(int pokemonId, int trainerId, CancellationToken token = default)
         {
             var trainer = await _trainersRepository.GetTrainerByIdAsync(trainerId, token);
@@ -37,16 +52,6 @@ namespace Yolk_Pokemon.Application.Services
             await _trainersRepository.UpdateTrainerAsync(trainer, token);
 
             return trainer;
-        }
-
-        public async Task<bool> CreatePokemonAsync(Pokemon pokemon, CancellationToken cancellationToken = default)
-        {
-            return await _pokemonsRepository.CreatePokemonAsync(pokemon, cancellationToken);
-        }
-
-        public async Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(CancellationToken cancellationToken = default)
-        {
-            return await _pokemonsRepository.GetAllPokemonsAsync(cancellationToken);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
                     await pokemonsService.CreatePokemonAsync(pokemon, token);
                     var response = pokemon.MapToResponse();
 
-                    return TypedResults.Created();
+                    return TypedResults.CreatedAtRoute(response, GetPokemonEndpoint.Name, new { id = pokemon.Id });
                 }
                 catch (DuplicateRecordException ex)
                 {
