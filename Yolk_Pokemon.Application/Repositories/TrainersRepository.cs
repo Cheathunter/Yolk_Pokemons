@@ -46,5 +46,15 @@ namespace Yolk_Pokemon.Application.Repositories
         {
             return Task.FromResult(_trainers.Remove(id));
         }
+
+        public Task<int> GetLastTrainerId(CancellationToken token = default)
+        {
+            if (_trainers.Count > 0)
+            {
+                return Task.FromResult(_trainers.Keys.Max());
+            }
+
+            return Task.FromResult(0);
+        }
     }
 }

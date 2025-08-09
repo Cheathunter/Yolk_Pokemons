@@ -6,11 +6,11 @@ namespace Yolk_Pokemon.Api.Mapping
 {
     public static class ModelMapping
     {
-        public static Trainer MapToTrainer(this CreateTrainerRequest request)
+        public static Trainer MapToTrainer(this CreateTrainerRequest request, int id)
         {
             return new()
             {
-                Id = 0,
+                Id = id,
                 Name = request.Name,
                 Region = request.Region,
                 Age = request.Age,

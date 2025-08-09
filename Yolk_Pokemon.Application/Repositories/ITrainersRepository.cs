@@ -14,5 +14,7 @@ namespace Yolk_Pokemon.Application.Repositories
         Task<bool> UpdateTrainerAsync(Trainer trainer, CancellationToken token = default);
 
         Task<bool> DeleteByIdAsync(int id, CancellationToken token = default);
+
+        Task<int> GetLastTrainerId(CancellationToken token = default);
     }
 }
