@@ -1,6 +1,4 @@
-﻿
-
-using Yolk_Pokemon.Application.Exceptions;
+﻿using Yolk_Pokemon.Application.Exceptions;
 using Yolk_Pokemon.Application.Models;
 
 namespace Yolk_Pokemon.Application.Repositories
@@ -37,6 +35,11 @@ namespace Yolk_Pokemon.Application.Repositories
             }
 
             return Task.FromResult(false);
+        }
+
+        public Task<bool> DeleteByIdAsync(int id, CancellationToken token = default)
+        {
+            return Task.FromResult(_trainers.Remove(id));
         }
     }
 }
