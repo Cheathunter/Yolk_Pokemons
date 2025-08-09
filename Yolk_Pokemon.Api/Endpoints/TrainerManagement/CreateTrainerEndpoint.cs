@@ -19,7 +19,7 @@ namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
                 await trainerService.CreateTrainerAsync(trainer, token);
                 var response = trainer.MapToResponse();
 
-                return TypedResults.Created();
+                return TypedResults.CreatedAtRoute(response, GetTrainerEndpoint.Name, new { id = trainer.Id });
             })
             .WithName(Name)
             .Produces<TrainerResponse>(StatusCodes.Status201Created);

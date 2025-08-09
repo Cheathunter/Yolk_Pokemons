@@ -12,5 +12,10 @@ namespace Yolk_Pokemon.Application.Services
         {
             return await _trainersRepository.CreateTrainerAsync(trainer, token);
         }
+
+        public async Task<Trainer?> GetTrainerByIdAsync(int id, CancellationToken token = default)
+        {
+            return await _trainersRepository.GetTrainerByIdAsync(id, token);
+        }
     }
 }

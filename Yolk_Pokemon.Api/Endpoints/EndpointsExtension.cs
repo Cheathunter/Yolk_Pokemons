@@ -7,6 +7,7 @@ namespace Yolk_Pokemon.Api.Endpoints
         public static IEndpointRouteBuilder MapApiEndpoints(this IEndpointRouteBuilder app)
         {
             app.MapCreateTrainer();
+            app.MapGetTrainer();
 
             return app;
         }

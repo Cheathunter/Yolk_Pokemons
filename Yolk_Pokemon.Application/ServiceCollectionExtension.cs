@@ -9,7 +9,7 @@ namespace Yolk_Pokemon.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<ITrainersRepository, TrainersRepository>();
+            services.AddSingleton<ITrainersRepository, TrainersRepository>();
             services.AddScoped<ITrainersService, TrainersService>();
 
             return services;
