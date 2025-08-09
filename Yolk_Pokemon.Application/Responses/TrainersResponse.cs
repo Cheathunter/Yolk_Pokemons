@@ -1,6 +1,4 @@
 ﻿
-using Yolk_Pokemon.Application.Models;
-
 namespace Yolk_Pokemon.Application.Responses
 {
     public class TrainersResponse

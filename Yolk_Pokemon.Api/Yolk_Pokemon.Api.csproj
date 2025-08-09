@@ -14,8 +14,4 @@
     <ProjectReference Include="..\Yolk_Pokemon.Application\Yolk_Pokemon.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Endpoints\PokemonManegement\" />
-  </ItemGroup>
-
 </Project>

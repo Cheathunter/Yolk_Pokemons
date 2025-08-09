@@ -1,4 +1,5 @@
-﻿using Yolk_Pokemon.Api.Endpoints.TrainerManagement;
+﻿using Yolk_Pokemon.Api.Endpoints.PokemonManegement;
+using Yolk_Pokemon.Api.Endpoints.TrainerManagement;
 
 namespace Yolk_Pokemon.Api.Endpoints
 {
@@ -11,6 +12,8 @@ namespace Yolk_Pokemon.Api.Endpoints
             app.MapGetAllTrainers();
             app.MapUpdateTrainer();
             app.MapDeleteTrainer();
+
+            app.MapGetAllPokemons();
 
             return app;
         }
