@@ -3,17 +3,17 @@ namespace Yolk_Pokemon.Application.Models;
 
 public partial class Pokemon
 {
-    public int Id { get; set; }
+    public required int Id { get; set; }
 
-    public string Name { get; set; } = null!;
+    public required string Name { get; set; }
 
-    public int Level { get; set; }
+    public required int Level { get; set; }
 
     public int TypeId { get; set; }
 
     public int? OwnerId { get; set; }
 
-    public int Health { get; set; }
+    public required int Health { get; set; }
 
     public DateTime? CaughtAt { get; set; }
 

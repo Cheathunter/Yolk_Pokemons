@@ -58,6 +58,19 @@ namespace Yolk_Pokemon.Api.Mapping
             };
         }
 
+        public static Pokemon MapToPokemon(this CreatePokemonRequest request)
+        {
+            return new()
+            {
+                Id = request.Id,
+                Name = request.Name,
+                Level = request.Level,
+                Health = request.Health,
+                PokemonMoves = request.PokemonMoves,
+                Type = request.Type
+            };
+        }
+
         public static PokemonResponse MapToResponse(this Pokemon pokemon)
         {
             return new()

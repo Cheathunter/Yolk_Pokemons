@@ -21,7 +21,8 @@
         {
             private const string Base = $"{ApiBase}/pokemon";
 
-            public const string GetAll = $"{Base}";
+            public const string Create = Base;
+            public const string GetAll = Base;
         }
     }
 }
