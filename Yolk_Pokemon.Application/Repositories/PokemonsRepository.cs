@@ -1,12 +1,15 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+using Yolk_Pokemon.Application.Context;
 using Yolk_Pokemon.Application.Exceptions;
 using Yolk_Pokemon.Application.Models;
 
 namespace Yolk_Pokemon.Application.Repositories
 {
-    public class PokemonsRepository : IPokemonsRepository
+    public class PokemonsRepository(PokemonDbContext context) : IPokemonsRepository
     {
         private readonly Dictionary<int, Pokemon> _pokemons = [];
+        private readonly PokemonDbContext _context = context;
 
         public Task<bool> CreatePokemonAsync(Pokemon pokemon, CancellationToken cancellationToken = default)
         {
@@ -20,9 +23,17 @@ namespace Yolk_Pokemon.Application.Repositories
             return Task.FromResult(true);
         }
 
-        public Task<Pokemon?> GetPokemonByIdAsync(int id, CancellationToken token = default)
+        public async Task<Pokemon?> GetPokemonByIdAsync(int id, CancellationToken token = default)
         {
-            return Task.FromResult(_pokemons.GetValueOrDefault(id));
+            var pokemon = await _context.Pokemons
+                .Include(p => p.PokemonMoves)
+                    .ThenInclude(pm => pm.Move)
+                        .ThenInclude(m => m.Type)
+                .Include(p => p.Type)
+                .Include(p => p.Owner)
+                .SingleOrDefaultAsync(p => p.Id == id, token);
+
+            return pokemon;
         }
 
         public Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(CancellationToken cancellationToken = default)

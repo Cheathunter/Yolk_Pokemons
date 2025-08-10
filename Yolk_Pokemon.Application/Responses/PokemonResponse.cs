@@ -13,12 +13,12 @@ namespace Yolk_Pokemon.Application.Responses
 
         public required int Health { get; init; }
 
+        public required string Type { get; init; }
+
         public DateTime? CaughtAt { get; init; }
 
         public virtual Trainer? Owner { get; init; }
 
-        public virtual ICollection<PokemonMove> PokemonMoves { get; init; } = [];
-
-        public required Element Type { get; init; }
+        public virtual ICollection<PokemonMoveDetail> PokemonMoves { get; init; } = [];
     }
 }

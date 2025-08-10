@@ -72,6 +72,16 @@ namespace Yolk_Pokemon.Api.Mapping
             };
         }
 
+        public static PokemonMoveDetail MapToPokemonMoveDetail(this PokemonMove pokemonMove)
+        {
+            return new()
+            {
+                MoveName = pokemonMove.Move.Name,
+                MoveType = pokemonMove.Move.Type.Name,
+                Power = pokemonMove.Move.Power
+            };
+        }
+
         public static PokemonResponse MapToResponse(this Pokemon pokemon)
         {
             return new()
@@ -82,8 +92,16 @@ namespace Yolk_Pokemon.Api.Mapping
                 Health = pokemon.Health,
                 CaughtAt = pokemon.CaughtAt,
                 Owner = pokemon.Owner,
-                PokemonMoves = pokemon.PokemonMoves,
-                Type = pokemon.Type
+                PokemonMoves = pokemon.PokemonMoves.Select(MapToPokemonMoveDetail).ToList(),
+                /*
+                PokemonMoves = [.. pokemon.PokemonMoves.Select(pm => new PokemonMoveDetail
+                {
+                    PokemonName = pokemon.Name,
+                    MoveName = pm.Move.Name,
+                    Power = pm.Move.Power,
+                    MoveType = pm.Move.Type.Name
+                })],*/
+                Type = pokemon.Type.Name
             };
         }
 

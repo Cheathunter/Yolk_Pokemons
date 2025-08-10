@@ -87,7 +87,6 @@ public partial class PokemonDbContext(DbContextOptions options) : DbContext(opti
 
             entity.Property(e => e.MoveName).HasMaxLength(100);
             entity.Property(e => e.MoveType).HasMaxLength(50);
-            entity.Property(e => e.PokemonName).HasMaxLength(100);
         });
 
         modelBuilder.Entity<PokemonWithType>(entity =>

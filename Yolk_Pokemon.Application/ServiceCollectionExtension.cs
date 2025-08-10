@@ -13,7 +13,7 @@ namespace Yolk_Pokemon.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddSingleton<ITrainersRepository, TrainersRepository>();
-            services.AddSingleton<IPokemonsRepository, PokemonsRepository>();
+            services.AddScoped<IPokemonsRepository, PokemonsRepository>();
             services.AddScoped<ITrainersService, TrainersService>();
             services.AddScoped<IPokemonsService, PokemonsService>();
 
