@@ -28,10 +28,15 @@ namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
                 {
                     return ((PokemonResponse?)null).ToGenericResponse(ex.Message, StatusCodes.Status409Conflict, false);
                 }
+                catch (InvalidOperationException ex)
+                {
+                    return ((PokemonResponse?)null).ToGenericResponse(ex.Message, StatusCodes.Status406NotAcceptable, false);
+                }
             })
             .WithName(Name)
             .Produces<GenericResponse<PokemonResponse>>(StatusCodes.Status201Created)
-            .Produces(StatusCodes.Status409Conflict);
+            .Produces(StatusCodes.Status409Conflict)
+            .Produces(StatusCodes.Status406NotAcceptable);
 
             return app;
         }

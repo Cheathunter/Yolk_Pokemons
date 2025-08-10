@@ -47,6 +47,8 @@ namespace Yolk_Pokemon.Application.Repositories
                     .SetProperty(t => t.Wins, trainer.Wins)
                     .SetProperty(t => t.Losses, trainer.Losses), token);
 
+            await _context.SaveChangesAsync(token);
+
             return result > 0;
         }
 

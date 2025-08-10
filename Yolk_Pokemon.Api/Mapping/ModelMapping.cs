@@ -66,8 +66,7 @@ namespace Yolk_Pokemon.Api.Mapping
                 Name = request.Name,
                 Level = request.Level,
                 Health = request.Health,
-                PokemonMoves = request.PokemonMoves,
-                Type = request.Type
+                TypeId = request.TypeId
             };
         }
 

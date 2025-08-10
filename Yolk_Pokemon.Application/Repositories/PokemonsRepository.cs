@@ -8,19 +8,26 @@ namespace Yolk_Pokemon.Application.Repositories
 {
     public class PokemonsRepository(PokemonDbContext context) : IPokemonsRepository
     {
-        private readonly Dictionary<int, Pokemon> _pokemons = [];
         private readonly PokemonDbContext _context = context;
 
-        public Task<bool> CreatePokemonAsync(Pokemon pokemon, CancellationToken token = default)
+        public async Task CreatePokemonAsync(Pokemon pokemon, CancellationToken token = default)
         {
-            bool result = _pokemons.TryAdd(pokemon.Id, pokemon);
+            bool exists = await _context.Pokemons.AnyAsync(p => p.Id == pokemon.Id, token);
 
-            if (!result)
+            if (exists)
             {
                 throw new DuplicateRecordException($"Attempt to save duplicated pokemon with id='{pokemon.Id}'");
             }
 
-            return Task.FromResult(true);
+            bool typeExists = await _context.Elements.AnyAsync(e => e.Id == pokemon.TypeId, token);
+
+            if (!typeExists)
+            {
+                throw new InvalidOperationException($"Attempt to save non-existing type id='{pokemon.TypeId}'");
+            }
+
+            await _context.Pokemons.AddAsync(pokemon, token);
+            await _context.SaveChangesAsync(token);
         }
 
         public async Task<Pokemon?> GetPokemonByIdAsync(int id, CancellationToken token = default)

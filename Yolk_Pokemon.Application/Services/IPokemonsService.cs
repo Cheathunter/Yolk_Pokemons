@@ -5,7 +5,7 @@ namespace Yolk_Pokemon.Application.Services
 {
     public interface IPokemonsService
     {
-        Task <bool> CreatePokemonAsync(Pokemon pokemon, CancellationToken token = default);
+        Task CreatePokemonAsync(Pokemon pokemon, CancellationToken token = default);
 
         Task<Pokemon?> GetPokemonByIdAsync(int id, CancellationToken token = default);
 

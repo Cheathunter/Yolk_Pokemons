@@ -10,9 +10,9 @@ namespace Yolk_Pokemon.Application.Services
         private readonly IPokemonsRepository _pokemonsRepository = pokemonsRepository;
         private readonly ITrainersRepository _trainersRepository = trainersRepository;
 
-        public async Task<bool> CreatePokemonAsync(Pokemon pokemon, CancellationToken token = default)
+        public async Task CreatePokemonAsync(Pokemon pokemon, CancellationToken token = default)
         {
-            return await _pokemonsRepository.CreatePokemonAsync(pokemon, token);
+            await _pokemonsRepository.CreatePokemonAsync(pokemon, token);
         }
 
         public async Task<Pokemon?> GetPokemonByIdAsync(int id, CancellationToken token = default)

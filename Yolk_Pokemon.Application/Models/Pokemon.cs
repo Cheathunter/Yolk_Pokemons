@@ -9,7 +9,7 @@ public partial class Pokemon
 
     public required int Level { get; set; }
 
-    public int TypeId { get; set; }
+    public required int TypeId { get; set; }
 
     public int? OwnerId { get; set; }
 

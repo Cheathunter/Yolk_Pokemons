@@ -12,9 +12,7 @@ namespace Yolk_Pokemon.Application.Requests
         public required int Level { get; init; }
 
         public required int Health { get; init; }
-        
-        public virtual ICollection<PokemonMove> PokemonMoves { get; init; } = [];
 
-        public virtual Element Type { get; init; } = null!;
+        public required int TypeId { get; init; }
     }
 }
