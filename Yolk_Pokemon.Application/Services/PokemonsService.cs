@@ -41,7 +41,7 @@ namespace Yolk_Pokemon.Application.Services
                 return null;
             }
 
-            if (await _trainersRepository.PokemonAlreadyAddedAsync(trainerId, pokemonId, token))
+            if (pokemon.OwnerId == trainerId)
             {
                 throw new DuplicateRecordException($"Attempt to add duplicated pokémon '{pokemonId}' to trainer '{trainerId}'");
             }

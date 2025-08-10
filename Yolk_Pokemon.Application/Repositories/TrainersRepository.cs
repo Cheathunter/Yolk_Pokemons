@@ -64,11 +64,5 @@ namespace Yolk_Pokemon.Application.Repositories
 
             return 0;
         }
-
-        public async Task<bool> PokemonAlreadyAddedAsync(int trainerId, int pokemonId, CancellationToken token = default)
-        {
-            return false;
-            //return Task.FromResult(_trainers[trainerId].Pokemons.Any(x => x.Id == pokemonId));
-        }
     }
 }
