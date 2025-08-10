@@ -3,7 +3,7 @@ namespace Yolk_Pokemon.Application.Models;
 
 public partial class Trainer
 {
-    public int Id { get; set; }
+    public required int Id { get; set; }
 
     public required string Name { get; set; }
 

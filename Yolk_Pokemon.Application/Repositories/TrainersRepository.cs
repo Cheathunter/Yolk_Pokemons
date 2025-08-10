@@ -1,22 +1,18 @@
-﻿using Yolk_Pokemon.Application.Exceptions;
+﻿using Microsoft.EntityFrameworkCore;
+using Yolk_Pokemon.Application.Context;
 using Yolk_Pokemon.Application.Models;
 
 namespace Yolk_Pokemon.Application.Repositories
 {
-    public class TrainersRepository : ITrainersRepository
+    public class TrainersRepository(PokemonDbContext context) : ITrainersRepository
     {
+        private readonly PokemonDbContext _context = context;
         private readonly Dictionary<int, Trainer> _trainers = [];
 
-        public Task<bool> CreateTrainerAsync(Trainer trainer, CancellationToken token = default)
+        public async Task CreateTrainerAsync(Trainer trainer, CancellationToken token = default)
         {
-            bool result = _trainers.TryAdd(trainer.Id, trainer);
-            
-            if (!result)
-            {
-                throw new DuplicateRecordException($"Attempt to save duplicated trainer '{trainer.Id}'");
-            }
-
-            return Task.FromResult(true);
+            await _context.Trainers.AddAsync(trainer, token);
+            await _context.SaveChangesAsync(token);
         }
 
         public Task<Trainer?> GetTrainerByIdAsync(int id, CancellationToken token = default)
@@ -47,14 +43,14 @@ namespace Yolk_Pokemon.Application.Repositories
             return Task.FromResult(_trainers.Remove(id));
         }
 
-        public Task<int> GetLastTrainerIdAsync(CancellationToken token = default)
+        public async Task<int> GetLastTrainerIdAsync(CancellationToken token = default)
         {
-            if (_trainers.Count > 0)
+            if (await _context.Trainers.AnyAsync(token))
             {
-                return Task.FromResult(_trainers.Keys.Max());
+                return await _context.Trainers.MaxAsync(t => t.Id, token);
             }
 
-            return Task.FromResult(0);
+            return 0;
         }
 
         public Task<bool> PokemonAlreadyAddedAsync(int trainerId, int pokemonId, CancellationToken token = default)

@@ -5,7 +5,7 @@ namespace Yolk_Pokemon.Application.Services
 {
     public interface ITrainersService
     {
-        Task<bool> CreateTrainerAsync(Trainer trainer, CancellationToken token = default);
+        Task CreateTrainerAsync(Trainer trainer, CancellationToken token = default);
 
         Task<Trainer?> GetTrainerByIdAsync(int id, CancellationToken token = default);
 
