@@ -15,9 +15,16 @@ namespace Yolk_Pokemon.Application.Repositories
             await _context.SaveChangesAsync(token);
         }
 
-        public Task<Trainer?> GetTrainerByIdAsync(int id, CancellationToken token = default)
+        public async Task<Trainer?> GetTrainerByIdAsync(int id, CancellationToken token = default)
         {
-            return Task.FromResult(_trainers.GetValueOrDefault(id));
+            var trainer = await _context.Trainers
+                .Include(t => t.Pokemons)
+                    .ThenInclude(p => p.PokemonMoves)
+                        .ThenInclude(pm => pm.Move)
+                            .ThenInclude(m => m.Type)
+                .SingleOrDefaultAsync(t => t.Id == id, token);
+
+            return trainer;
         }
 
         public Task<IEnumerable<Trainer>> GetAllTrainersAsync(CancellationToken token = default)
@@ -53,9 +60,10 @@ namespace Yolk_Pokemon.Application.Repositories
             return 0;
         }
 
-        public Task<bool> PokemonAlreadyAddedAsync(int trainerId, int pokemonId, CancellationToken token = default)
+        public async Task<bool> PokemonAlreadyAddedAsync(int trainerId, int pokemonId, CancellationToken token = default)
         {
-            return Task.FromResult(_trainers[trainerId].Pokemons.Any(x => x.Id == pokemonId));
+            return false;
+            //return Task.FromResult(_trainers[trainerId].Pokemons.Any(x => x.Id == pokemonId));
         }
     }
 }

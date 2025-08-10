@@ -17,7 +17,7 @@ namespace Yolk_Pokemon.Application.Responses
 
         public DateTime? CaughtAt { get; init; }
 
-        public virtual Trainer? Owner { get; init; }
+        public int? OwnerId { get; init; }
 
         public virtual ICollection<PokemonMoveDetail> PokemonMoves { get; init; } = [];
     }

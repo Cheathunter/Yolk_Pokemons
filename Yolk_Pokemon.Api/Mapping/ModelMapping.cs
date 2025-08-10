@@ -32,7 +32,7 @@ namespace Yolk_Pokemon.Api.Mapping
                 CreatedAt = trainer.CreatedAt,
                 Wins = trainer.Wins,
                 Losses = trainer.Losses,
-                Pokemons = trainer.Pokemons
+                Pokemons = [.. trainer.Pokemons.Select(MapToResponse)]
             };
         }
 
@@ -91,16 +91,8 @@ namespace Yolk_Pokemon.Api.Mapping
                 Level = pokemon.Level,
                 Health = pokemon.Health,
                 CaughtAt = pokemon.CaughtAt,
-                Owner = pokemon.Owner,
-                PokemonMoves = pokemon.PokemonMoves.Select(MapToPokemonMoveDetail).ToList(),
-                /*
-                PokemonMoves = [.. pokemon.PokemonMoves.Select(pm => new PokemonMoveDetail
-                {
-                    PokemonName = pokemon.Name,
-                    MoveName = pm.Move.Name,
-                    Power = pm.Move.Power,
-                    MoveType = pm.Move.Type.Name
-                })],*/
+                OwnerId = pokemon.OwnerId,
+                PokemonMoves = [.. pokemon.PokemonMoves.Select(MapToPokemonMoveDetail)],
                 Type = pokemon.Type.Name
             };
         }

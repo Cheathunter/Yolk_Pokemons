@@ -1,6 +1,4 @@
 ﻿
-using Yolk_Pokemon.Application.Models;
-
 namespace Yolk_Pokemon.Application.Responses
 {
     public class TrainerResponse
@@ -19,6 +17,6 @@ namespace Yolk_Pokemon.Application.Responses
 
         public int Losses { get; init; }
 
-        public virtual ICollection<Pokemon> Pokemons { get; init; } = [];
+        public virtual ICollection<PokemonResponse> Pokemons { get; init; } = [];
     }
 }
