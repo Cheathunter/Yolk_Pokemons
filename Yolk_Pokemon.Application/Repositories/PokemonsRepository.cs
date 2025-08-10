@@ -11,7 +11,7 @@ namespace Yolk_Pokemon.Application.Repositories
         private readonly Dictionary<int, Pokemon> _pokemons = [];
         private readonly PokemonDbContext _context = context;
 
-        public Task<bool> CreatePokemonAsync(Pokemon pokemon, CancellationToken cancellationToken = default)
+        public Task<bool> CreatePokemonAsync(Pokemon pokemon, CancellationToken token = default)
         {
             bool result = _pokemons.TryAdd(pokemon.Id, pokemon);
 
@@ -36,9 +36,16 @@ namespace Yolk_Pokemon.Application.Repositories
             return pokemon;
         }
 
-        public Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(CancellationToken token = default)
         {
-            return Task.FromResult((IEnumerable<Pokemon>)_pokemons.Values);
+            var pokemons = await _context.Pokemons
+                .Include(p => p.PokemonMoves)
+                    .ThenInclude(pm => pm.Move)
+                        .ThenInclude(m => m.Type)
+                .Include(p => p.Type)
+                .Include(p => p.Owner).ToListAsync(token);
+
+            return pokemons;
         }
 
         public Task UpdatePokemonAsync(Pokemon pokemon, CancellationToken token = default)
