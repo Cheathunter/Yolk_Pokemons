@@ -48,9 +48,14 @@ namespace Yolk_Pokemon.Application.Repositories
             return pokemons;
         }
 
-        public Task UpdatePokemonAsync(Pokemon pokemon, CancellationToken token = default)
+        public async Task UpdatePokemonsOwnerAsync(int pokemonId, int trainerId, CancellationToken token = default)
         {
-            return Task.FromResult(_pokemons[pokemon.Id] = pokemon);
+            await _context.Pokemons
+                .Where(p => p.Id == pokemonId)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(p => p.OwnerId, trainerId), token);
+
+            await _context.SaveChangesAsync(token);
         }
     }
 }
