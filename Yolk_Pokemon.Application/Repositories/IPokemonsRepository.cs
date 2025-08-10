@@ -9,7 +9,7 @@ namespace Yolk_Pokemon.Application.Repositories
 
         Task<Pokemon?> GetPokemonByIdAsync(int id, CancellationToken token = default);
 
-        Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(CancellationToken token = default);
+        Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(GetAllPokemonsOptions options, CancellationToken token = default);
 
         Task UpdatePokemonsOwnerAsync(int pokemonId, int trainerId, CancellationToken token = default);
     }

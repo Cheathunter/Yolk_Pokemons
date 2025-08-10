@@ -43,14 +43,29 @@ namespace Yolk_Pokemon.Application.Repositories
             return pokemon;
         }
 
-        public async Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(CancellationToken token = default)
+        public async Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(GetAllPokemonsOptions options, CancellationToken token = default)
         {
-            var pokemons = await _context.Pokemons
+            IQueryable<Pokemon> query = _context.Pokemons
                 .Include(p => p.PokemonMoves)
                     .ThenInclude(pm => pm.Move)
                         .ThenInclude(m => m.Type)
                 .Include(p => p.Type)
-                .Include(p => p.Owner).ToListAsync(token);
+                .Include(p => p.Owner);
+
+            // Aply sort mechanizm
+            if (options.SortedOrder != SortedOrder.Unsorted && options.SortedField != null)
+            {
+                query = options.SortedField switch
+                {
+                    "name" => options.SortedOrder == SortedOrder.Ascending ? query.OrderBy(static q => q.Name) : query.OrderByDescending(static q => q.Name),
+                    "level" => options.SortedOrder == SortedOrder.Ascending ? query.OrderBy(static q => q.Level) : query.OrderByDescending(static q => q.Level),
+                    "caughtAt" => options.SortedOrder == SortedOrder.Ascending ? query.OrderBy(static q => q.CaughtAt) : query.OrderByDescending(static q => q.CaughtAt),
+                    _ => query.OrderBy(static q => q.Id)
+                };
+            }
+
+            var pokemons = await query
+                    .ToListAsync(token);
 
             return pokemons;
         }

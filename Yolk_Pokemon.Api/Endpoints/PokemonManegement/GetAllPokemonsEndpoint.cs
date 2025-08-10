@@ -15,7 +15,8 @@ namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
             app.MapGet(ApiEndpoints.Pokemons.GetAll, static async (
                 [AsParameters] GetAllPokemonsRequest request, IPokemonsService pokemonsService, HttpContext context, CancellationToken token) =>
             {
-                var pokemons = await pokemonsService.GetAllPokemonsAsync(token);
+                var options = request.MapToOptions();
+                var pokemons = await pokemonsService.GetAllPokemonsAsync(options, token);
                 var response = pokemons.MapToResponse();
 
                 return response.ToGenericResponse(SuccessfulMessage, StatusCodes.Status200OK);

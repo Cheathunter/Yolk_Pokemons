@@ -7,6 +7,8 @@ namespace Yolk_Pokemon.Api.Mapping
 {
     public static class ModelMapping
     {
+        private const string DescOrder = "desc";
+
         public static Trainer MapToTrainer(this CreateTrainerRequest request, int id)
         {
             return new()
@@ -113,6 +115,19 @@ namespace Yolk_Pokemon.Api.Mapping
                 Data = data is null ? null : [data]
             };
             return Results.Json(response, (JsonSerializerOptions?)null, null, statusCode);
+        }
+
+        public static GetAllPokemonsOptions MapToOptions(this GetAllPokemonsRequest request)
+        {
+            var sortOptions = request.SortBy?.Split(':');
+
+            return new GetAllPokemonsOptions
+            {
+                SortedField = sortOptions?.Length > 0 ? sortOptions[0] : null,
+                SortedOrder = sortOptions is null ? SortedOrder.Unsorted :
+                sortOptions.Length == 1 ? SortedOrder.Ascending :
+                sortOptions[1].Equals(DescOrder, StringComparison.Ordinal) ? SortedOrder.Descending : SortedOrder.Ascending
+            };
         }
     }
 }
