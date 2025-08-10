@@ -11,7 +11,7 @@ public partial class Trainer
 
     public int? Age { get; set; }
 
-    public required DateTime? CreatedAt { get; set; }
+    public DateTime? CreatedAt { get; set; }
 
     public int Wins { get; set; }
 

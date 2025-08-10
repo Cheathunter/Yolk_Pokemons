@@ -49,7 +49,6 @@ namespace Yolk_Pokemon.Application.Services
             pokemon.OwnerId = trainerId;
             trainer.Pokemons.Add(pokemon);
             await _pokemonsRepository.UpdatePokemonsOwnerAsync(pokemonId, trainerId, token);
-            await _trainersRepository.UpdateTrainerAsync(trainer, token);
 
             return trainer;
         }

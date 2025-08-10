@@ -20,11 +20,11 @@ namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
                 Trainer updated = request.MapToTrainer(id);
                 var trainer = await trainersService.UpdateTrainerAsync(updated, token);
 
-                if (!trainer)
+                if (trainer == null)
                 {
                     return ((TrainerResponse?)null).ToGenericResponse(UnsuccessfulMessage, StatusCodes.Status404NotFound, false);
                 }
-                var response = updated.MapToResponse();
+                var response = trainer.MapToResponse();
 
                 return response.ToGenericResponse(SuccessfulMessage, StatusCodes.Status200OK);
             })

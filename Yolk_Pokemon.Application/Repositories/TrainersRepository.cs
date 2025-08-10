@@ -7,7 +7,6 @@ namespace Yolk_Pokemon.Application.Repositories
     public class TrainersRepository(PokemonDbContext context) : ITrainersRepository
     {
         private readonly PokemonDbContext _context = context;
-        private readonly Dictionary<int, Trainer> _trainers = [];
 
         public async Task CreateTrainerAsync(Trainer trainer, CancellationToken token = default)
         {
@@ -37,17 +36,18 @@ namespace Yolk_Pokemon.Application.Repositories
                 .ToListAsync(token);
         }
 
-        public Task<bool> UpdateTrainerAsync(Trainer trainer, CancellationToken token = default)
+        public async Task<bool> UpdateTrainerAsync(Trainer trainer, CancellationToken token = default)
         {
-            bool exists = _trainers.TryGetValue(trainer.Id, out _);
+            var result = await _context.Trainers
+                .Where(t => t.Id == trainer.Id)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(t => t.Name, trainer.Name)
+                    .SetProperty(t => t.Region, trainer.Region)
+                    .SetProperty(t => t.Age, trainer.Age)
+                    .SetProperty(t => t.Wins, trainer.Wins)
+                    .SetProperty(t => t.Losses, trainer.Losses), token);
 
-            if (exists)
-            {
-                _trainers[trainer.Id] = trainer;
-                return Task.FromResult(true);
-            }
-
-            return Task.FromResult(false);
+            return result > 0;
         }
 
         public async Task<bool> DeleteByIdAsync(int id, CancellationToken token = default)

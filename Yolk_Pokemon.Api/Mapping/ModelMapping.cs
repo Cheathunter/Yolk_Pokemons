@@ -44,7 +44,6 @@ namespace Yolk_Pokemon.Api.Mapping
                 Name = request.Name,
                 Region = request.Region,
                 Age = request.Age,
-                CreatedAt = request.CreatedAt,
                 Wins = request.Wins,
                 Losses = request.Losses,
                 Pokemons = request.Pokemons

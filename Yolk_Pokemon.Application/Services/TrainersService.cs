@@ -23,9 +23,19 @@ namespace Yolk_Pokemon.Application.Services
             return await _trainersRepository.GetAllTrainersAsync(token);
         }
 
-        public async Task<bool> UpdateTrainerAsync(Trainer trainer, CancellationToken token = default)
+        public async Task<Trainer?> UpdateTrainerAsync(Trainer trainer, CancellationToken token = default)
         {
-            return await _trainersRepository.UpdateTrainerAsync(trainer, token);
+            var currentTrainer = await _trainersRepository.GetTrainerByIdAsync(trainer.Id, token);
+
+            if (currentTrainer == null)
+            {
+                return null;
+            }
+
+            trainer.Pokemons = currentTrainer.Pokemons;
+            bool result = await _trainersRepository.UpdateTrainerAsync(trainer, token);
+
+            return result ? trainer : null;
         }
 
         public async Task<bool> DeleteByIdAsync(int id, CancellationToken token = default)
