@@ -8,6 +8,7 @@ namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
     public static class GetAllPokemonsEndpoint
     {
         public const string Name = "GetAllPokemons";
+        private const string SuccessfulMessage = "Pokemons listed successfully.";
 
         public static IEndpointRouteBuilder MapGetAllPokemons(this IEndpointRouteBuilder app)
         {
@@ -15,11 +16,12 @@ namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
                 [AsParameters] GetAllPokemonsRequest request, IPokemonsService pokemonsService, HttpContext context, CancellationToken token) =>
             {
                 var pokemons = await pokemonsService.GetAllPokemonsAsync(token);
+                var response = pokemons.MapToResponse();
 
-                return TypedResults.Ok(pokemons.MapToResponse());
+                return response.ToGenericResponse(SuccessfulMessage, StatusCodes.Status200OK);
             })
             .WithName(Name)
-            .Produces<PokemonsResponse>(StatusCodes.Status200OK);
+            .Produces<GenericResponse<PokemonsResponse>>(StatusCodes.Status200OK);
 
             return app;
         }

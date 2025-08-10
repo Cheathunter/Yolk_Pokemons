@@ -10,6 +10,8 @@ namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
     public static class AddPokemonToTrainerEndpoint
     {
         public const string Name = "AddPokemonToTrainer";
+        private const string SuccessfulMessage = "Pokemon successfully added to user.";
+        private const string UnsuccessfulMessage = "Trainer or pokemon not found.";
 
         public static IEndpointRouteBuilder MapAddPokemonToTrainer(this IEndpointRouteBuilder app)
         {
@@ -23,21 +25,22 @@ namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
 
                     if (updated == null)
                     {
-                        return Results.NotFound();
+                        return ((TrainerResponse?)null).ToGenericResponse(UnsuccessfulMessage, StatusCodes.Status404NotFound, false);
                     }
 
                     var response = updated.MapToResponse();
 
-                    return TypedResults.CreatedAtRoute(response, GetTrainerEndpoint.Name, new { id = updated.Id });
+                    return response.ToGenericResponse(SuccessfulMessage, StatusCodes.Status200OK);
                 }
                 catch (DuplicateRecordException ex)
                 {
-                    return Results.Conflict(new { Error = ex.Message });
+                    return ((PokemonResponse?)null).ToGenericResponse(ex.Message, StatusCodes.Status409Conflict, false);
                 }
             })
             .WithName(Name)
-            .Produces<TrainerResponse>(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status404NotFound);
+            .Produces<GenericResponse<TrainerResponse>>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status409Conflict);
 
             return app;
         }

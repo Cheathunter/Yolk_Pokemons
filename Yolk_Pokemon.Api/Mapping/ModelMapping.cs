@@ -1,4 +1,5 @@
-﻿using Yolk_Pokemon.Application.Models;
+﻿using System.Text.Json;
+using Yolk_Pokemon.Application.Models;
 using Yolk_Pokemon.Application.Requests;
 using Yolk_Pokemon.Application.Responses;
 
@@ -92,6 +93,18 @@ namespace Yolk_Pokemon.Api.Mapping
             {
                 Pokemons = responses.Select(MapToResponse)
             };
+        }
+
+        public static IResult ToGenericResponse<T>(this T? data, string message, int statusCode, bool success = true)
+        {
+            var response = new GenericResponse<T>
+            {
+                Success = success,
+                StatusCode = statusCode,
+                Message = message,
+                Data = data is null ? null : [data]
+            };
+            return Results.Json(response, (JsonSerializerOptions?)null, null, statusCode);
         }
     }
 }

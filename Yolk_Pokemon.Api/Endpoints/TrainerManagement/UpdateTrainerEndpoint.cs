@@ -9,10 +9,12 @@ namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
     public static class UpdateTrainerEndpoint
     {
         public const string Name = "UpdateTrainer";
+        private const string SuccessfulMessage = "Trainer updated successfully.";
+        private const string UnsuccessfulMessage = "Trainer not found.";
 
         public static IEndpointRouteBuilder MapUpdateTrainer(this IEndpointRouteBuilder app)
         {
-            app.MapPut(ApiEndpoints.Trainers.Update, async (
+            app.MapPut(ApiEndpoints.Trainers.Update, static async (
                 int id, UpdateTrainerRequest request, ITrainersService trainersService, HttpContext context, CancellationToken token) =>
             {
                 Trainer updated = request.MapToTrainer(id);
@@ -20,13 +22,14 @@ namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
 
                 if (!trainer)
                 {
-                    return Results.NotFound();
+                    return ((TrainerResponse?)null).ToGenericResponse(UnsuccessfulMessage, StatusCodes.Status404NotFound, false);
                 }
+                var response = updated.MapToResponse();
 
-                return TypedResults.Ok(updated.MapToResponse());
+                return response.ToGenericResponse(SuccessfulMessage, StatusCodes.Status200OK);
             })
             .WithName(Name)
-            .Produces<TrainerResponse>(StatusCodes.Status200OK)
+            .Produces<GenericResponse<TrainerResponse>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound);
 
             return app;

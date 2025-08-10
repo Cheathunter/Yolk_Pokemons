@@ -9,6 +9,7 @@ namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
     public static class CreateTrainerEndpoint
     {
         public const string Name = "CreateTrainer";
+        private const string SuccessfulMessage = "Trainer created successfully.";
 
         public static IEndpointRouteBuilder MapCreateTrainer(this IEndpointRouteBuilder app)
         {
@@ -21,10 +22,10 @@ namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
                 await trainerService.CreateTrainerAsync(trainer, token);
                 var response = trainer.MapToResponse();
 
-                return TypedResults.CreatedAtRoute(response, GetTrainerEndpoint.Name, new { id = trainer.Id });
+                return response.ToGenericResponse(SuccessfulMessage, StatusCodes.Status201Created);
             })
             .WithName(Name)
-            .Produces<TrainerResponse>(StatusCodes.Status201Created);
+            .Produces<GenericResponse<TrainerResponse>>(StatusCodes.Status201Created);
 
             return app;
         }

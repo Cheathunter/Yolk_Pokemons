@@ -7,13 +7,14 @@ using Yolk_Pokemon.Application.Services;
 
 namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
 {
-    public static class CeratePokemonEndpoint
+    public static class CreatePokemonEndpoint
     {
         public const string Name = "CreatePokemon";
+        private const string SuccessfulMessage = "Pokemon created successfully.";
 
         public static IEndpointRouteBuilder MapCreatePokemon(this IEndpointRouteBuilder app)
         {
-            app.MapPost(ApiEndpoints.Pokemons.Create, async (
+            app.MapPost(ApiEndpoints.Pokemons.Create, static async (
                 CreatePokemonRequest request, IPokemonsService pokemonsService, CancellationToken token) =>
             {
                 try {
@@ -21,15 +22,16 @@ namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
                     await pokemonsService.CreatePokemonAsync(pokemon, token);
                     var response = pokemon.MapToResponse();
 
-                    return TypedResults.CreatedAtRoute(response, GetPokemonEndpoint.Name, new { id = pokemon.Id });
+                    return response.ToGenericResponse(SuccessfulMessage, StatusCodes.Status201Created);
                 }
                 catch (DuplicateRecordException ex)
                 {
-                    return Results.Conflict(new { Error = ex.Message });
+                    return ((PokemonResponse?)null).ToGenericResponse(ex.Message, StatusCodes.Status409Conflict, false);
                 }
             })
             .WithName(Name)
-            .Produces<PokemonResponse>(StatusCodes.Status201Created);
+            .Produces<GenericResponse<PokemonResponse>>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status409Conflict);
 
             return app;
         }
