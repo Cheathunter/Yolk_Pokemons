@@ -50,9 +50,20 @@ namespace Yolk_Pokemon.Application.Repositories
             return Task.FromResult(false);
         }
 
-        public Task<bool> DeleteByIdAsync(int id, CancellationToken token = default)
+        public async Task<bool> DeleteByIdAsync(int id, CancellationToken token = default)
         {
-            return Task.FromResult(_trainers.Remove(id));
+            await _context.Pokemons
+                .Where(p => p.OwnerId == id)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(p => p.OwnerId, (int?)null), token);
+
+            var result = await _context.Trainers
+                .Where(t => t.Id == id)
+                .ExecuteDeleteAsync(token);
+
+            await _context.SaveChangesAsync(token);
+
+            return result > 0;
         }
 
         public async Task<int> GetLastTrainerIdAsync(CancellationToken token = default)
