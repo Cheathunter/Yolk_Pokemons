@@ -6,12 +6,20 @@ using Yolk_Pokemon.Application.Services;
 
 namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
 {
+    /// <summary>
+    /// Update Trainer edpoint
+    /// </summary>
     public static class UpdateTrainerEndpoint
     {
         public const string Name = "UpdateTrainer";
         private const string SuccessfulMessage = "Trainer updated successfully.";
         private const string UnsuccessfulMessage = "Trainer not found.";
 
+        /// <summary>
+        /// Method to map update Trainer endpoint.
+        /// </summary>
+        /// <param name="app">Endpoint router builder.</param>
+        /// <returns>Json from <see cref="GenericResponse{T}"/>, <see cref="TrainerResponse"/> and OK status or error status.</returns>
         public static IEndpointRouteBuilder MapUpdateTrainer(this IEndpointRouteBuilder app)
         {
             app.MapPut(ApiEndpoints.Trainers.Update, static async (

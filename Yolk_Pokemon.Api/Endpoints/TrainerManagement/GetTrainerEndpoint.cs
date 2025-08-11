@@ -4,12 +4,20 @@ using Yolk_Pokemon.Application.Services;
 
 namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
 {
+    /// <summary>
+    /// Get Trainer endpoint
+    /// </summary>
     public static class GetTrainerEndpoint
     {
         public const string Name = "GetTrainer";
         private const string SuccessfulMessage = "Trainer found successfully.";
         private const string UnsuccessfulMessage = "Trainer not found.";
 
+        /// <summary>
+        /// Method to map get Trainer by ID endpoint.
+        /// </summary>
+        /// <param name="app">Endpoint router builder.</param>
+        /// <returns>Json from <see cref="GenericResponse{T}"/>, <see cref="TrainerResponse"/> and OK status or error status.</returns>
         public static IEndpointRouteBuilder MapGetTrainer(this IEndpointRouteBuilder app)
         {
             app.MapGet(ApiEndpoints.Trainers.Get, static async (

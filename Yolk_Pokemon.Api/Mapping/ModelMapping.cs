@@ -5,10 +5,20 @@ using Yolk_Pokemon.Application.Responses;
 
 namespace Yolk_Pokemon.Api.Mapping
 {
+    /// <summary>
+    /// Class to map objects like Trainer and Pokemon request/response
+    /// </summary>
     public static class ModelMapping
     {
         private const string DescOrder = "desc";
 
+        /// <summary>
+        /// Extension method of <see cref="CreateTrainerRequest"/>.
+        /// Maps <see cref="CreateTrainerRequest"/> to <see cref="Trainer"/>.
+        /// </summary>
+        /// <param name="request">CreateTrainerRequest object used for maping.</param>
+        /// <param name="id">Id of new Trainer</param>
+        /// <returns>Remapped Trainer object.</returns>
         public static Trainer MapToTrainer(this CreateTrainerRequest request, int id)
         {
             return new()
@@ -23,6 +33,12 @@ namespace Yolk_Pokemon.Api.Mapping
             };
         }
 
+        /// <summary>
+        /// Extension method of <see cref="Trainer"/>.
+        /// Maps <see cref="Trainer"/> to <see cref="TrainerResponse"/>.
+        /// </summary>
+        /// <param name="trainer">Trainer object used for maping.</param>
+        /// <returns>Remapped TrainerResponse object.</returns>
         public static TrainerResponse MapToResponse(this Trainer trainer)
         {
             return new()
@@ -38,6 +54,13 @@ namespace Yolk_Pokemon.Api.Mapping
             };
         }
 
+        /// <summary>
+        /// Extension method of <see cref="UpdateTrainerRequest"/>.
+        /// Maps <see cref="UpdateTrainerRequest"/> to <see cref="Trainer"/>.
+        /// </summary>
+        /// <param name="request">UpdateTrainerRequest object used for maping.</param>
+        /// <param name="id">Id of updated Trainer</param>
+        /// <returns>Remapped Trainer object.</returns>
         public static Trainer MapToTrainer(this UpdateTrainerRequest request, int id)
         {
             return new()
@@ -52,14 +75,26 @@ namespace Yolk_Pokemon.Api.Mapping
             };
         }
 
-        public static TrainersResponse MapToResponse(this IEnumerable<Trainer> responses)
+        /// <summary>
+        /// Extension method of <see cref="IEnumerable{Trainer}"/>.
+        /// Maps IEnumerable of <see cref="Trainer"/> to <see cref="TrainerResponse"/>.
+        /// </summary>
+        /// <param name="trainers">Set of Trainer object used for maping.</param>
+        /// <returns>Remapped TrainersResponse object.</returns>
+        public static TrainersResponse MapToResponse(this IEnumerable<Trainer> trainers)
         {
             return new TrainersResponse
             {
-                Trainers = responses.Select(MapToResponse)
+                Trainers = trainers.Select(MapToResponse)
             };
         }
 
+        /// <summary>
+        /// Extension method of <see cref="CreatePokemonRequest"/>.
+        /// Maps <see cref="CreatePokemonRequest"/> to <see cref="Pokemon"/>.
+        /// </summary>
+        /// <param name="request">CreatePokemonRequest object used for maping.</param>
+        /// <returns>Remapped Pokemon object.</returns>
         public static Pokemon MapToPokemon(this CreatePokemonRequest request)
         {
             return new()
@@ -72,6 +107,12 @@ namespace Yolk_Pokemon.Api.Mapping
             };
         }
 
+        /// <summary>
+        /// Extension method of <see cref="PokemonMove"/>.
+        /// Maps <see cref="PokemonMove"/> to <see cref="PokemonMoveDetail"/>.
+        /// </summary>
+        /// <param name="pokemonMove">PokemonMove object used for maping.</param>
+        /// <returns>Remapped PokemonMoveDetail object.</returns>
         public static PokemonMoveDetail MapToPokemonMoveDetail(this PokemonMove pokemonMove)
         {
             return new()
@@ -82,6 +123,12 @@ namespace Yolk_Pokemon.Api.Mapping
             };
         }
 
+        /// <summary>
+        /// Extension method of <see cref="Pokemon"/>.
+        /// Maps <see cref="Pokemon"/> to <see cref="PokemonResponse"/>.
+        /// </summary>
+        /// <param name="pokemon">Pokemon object used for maping.</param>
+        /// <returns>Remapped PokemonResponse object.</returns>
         public static PokemonResponse MapToResponse(this Pokemon pokemon)
         {
             return new()
@@ -97,14 +144,29 @@ namespace Yolk_Pokemon.Api.Mapping
             };
         }
 
-        public static PokemonsResponse MapToResponse(this IEnumerable<Pokemon> responses)
+        /// <summary>
+        /// Extension method of <see cref="IEnumerable{Pokemon}"/>.
+        /// Maps IEnumerable of <see cref="Pokemon"/> to <see cref="PokemonsResponse"/>.
+        /// </summary>
+        /// <param name="pokemons">Set of Pokemon object used for maping.</param>
+        /// <returns>Remapped PokemonsResponse object.</returns>
+        public static PokemonsResponse MapToResponse(this IEnumerable<Pokemon> pokemons)
         {
             return new PokemonsResponse
             {
-                Pokemons = responses.Select(MapToResponse)
+                Pokemons = pokemons.Select(MapToResponse)
             };
         }
 
+        /// <summary>
+        /// Extension method of <see cref="IResult"/>.
+        /// Maps any response to JSon <see cref="GenericResponse{T}"/>.
+        /// </summary>
+        /// <param name="data">Response data.</param>
+        /// <param name="message">Message.</param>
+        /// <param name="statusCode">HTTP Status code.</param>
+        /// <param name="success">Indication of successful response.</param>
+        /// <returns>IResult object containing generic response.</returns>
         public static IResult ToGenericResponse<T>(this T? data, string message, int statusCode, bool success = true)
         {
             var response = new GenericResponse<T>
@@ -117,6 +179,13 @@ namespace Yolk_Pokemon.Api.Mapping
             return Results.Json(response, (JsonSerializerOptions?)null, null, statusCode);
         }
 
+        /// <summary>
+        /// Extension method of <see cref="GetAllPokemonsRequest"/>.
+        /// Maps <see cref="GetAllPokemonsRequest"/> to <see cref="GetAllPokemonsOptions"/>.
+        /// SortedOrder is unsorted when SortBy not used, otherwise Ascending or Descending.
+        /// </summary>
+        /// <param name="request">GetAllPokemonsRequest object used for maping.</param>
+        /// <returns>Remapped GetAllPokemonsOptions object.</returns>
         public static GetAllPokemonsOptions MapToOptions(this GetAllPokemonsRequest request)
         {
             var sortOptions = request.SortBy?.Split(':');

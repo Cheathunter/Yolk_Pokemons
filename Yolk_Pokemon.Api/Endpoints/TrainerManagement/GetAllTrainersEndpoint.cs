@@ -5,11 +5,19 @@ using Yolk_Pokemon.Application.Services;
 
 namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
 {
+    /// <summary>
+    /// Get all Trainers endpoint
+    /// </summary>
     public static class GetAllTrainersEndpoint
     {
         public const string Name = "GetAllTrainers";
         private const string SuccessfulMessage = "Trainers listed successfully.";
 
+        /// <summary>
+        /// Method to map get all Trainers endpoint.
+        /// </summary>
+        /// <param name="app">Endpoint router builder.</param>
+        /// <returns>Json from <see cref="GenericResponse{T}"/>, <see cref="TrainersResponse"/> and OK status.</returns>
         public static IEndpointRouteBuilder MapGetAllTrainers(this IEndpointRouteBuilder app)
         {
             app.MapGet(ApiEndpoints.Trainers.GetAll, static async (

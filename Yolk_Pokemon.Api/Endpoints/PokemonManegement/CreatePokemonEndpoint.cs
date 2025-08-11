@@ -7,11 +7,19 @@ using Yolk_Pokemon.Application.Services;
 
 namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
 {
+    /// <summary>
+    /// Create Pokemon endpoint
+    /// </summary>
     public static class CreatePokemonEndpoint
     {
         public const string Name = "CreatePokemon";
         private const string SuccessfulMessage = "Pokemon created successfully.";
 
+        /// <summary>
+        /// Method to map create Pokemon endpoint.
+        /// </summary>
+        /// <param name="app">Endpoint router builder.</param>
+        /// <returns>Json from <see cref="GenericResponse{T}"/>, <see cref="PokemonResponse"/> and Created status or error status.</returns>
         public static IEndpointRouteBuilder MapCreatePokemon(this IEndpointRouteBuilder app)
         {
             app.MapPost(ApiEndpoints.Pokemons.Create, static async (

@@ -4,6 +4,10 @@ using Yolk_Pokemon.Application.Models;
 
 namespace Yolk_Pokemon.Application.Context;
 
+/// <summary>
+/// EF database context class.
+/// </summary>
+/// <param name="options">Options use by DbContext.</param>
 public partial class PokemonDbContext(DbContextOptions options) : DbContext(options)
 {
     public virtual DbSet<Element> Elements { get; set; }
@@ -20,6 +24,10 @@ public partial class PokemonDbContext(DbContextOptions options) : DbContext(opti
 
     public virtual DbSet<Trainer> Trainers { get; set; }
 
+    /// <summary>
+    /// Relations created fully by EF from prebuild database.
+    /// </summary>
+    /// <param name="modelBuilder"><see cref="ModelBuilder"/></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Element>(entity =>

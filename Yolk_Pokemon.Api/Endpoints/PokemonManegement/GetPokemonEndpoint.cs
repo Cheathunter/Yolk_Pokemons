@@ -4,12 +4,20 @@ using Yolk_Pokemon.Application.Services;
 
 namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
 {
+    /// <summary>
+    /// Get Pokemon endpoint
+    /// </summary>
     public static class GetPokemonEndpoint
     {
         public const string Name = "GetPokemon";
         private const string SuccessfulMessage = "Pokemon found successfully.";
         private const string UnsuccessfulMessage = "Pokemon not found.";
 
+        /// <summary>
+        /// Method to map get Pokemon by ID endpoint.
+        /// </summary>
+        /// <param name="app">Endpoint router builder.</param>
+        /// <returns>Json from <see cref="GenericResponse{T}"/>, <see cref="PokemonResponse"/> and OK status or error status.</returns>
         public static IEndpointRouteBuilder MapGetPokemon(this IEndpointRouteBuilder app)
         {
             app.MapGet(ApiEndpoints.Pokemons.Get, static async (

@@ -7,12 +7,20 @@ using Yolk_Pokemon.Application.Services;
 
 namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
 {
+    /// <summary>
+    /// Add Pokemon to Trainer endpoint
+    /// </summary>
     public static class AddPokemonToTrainerEndpoint
     {
         public const string Name = "AddPokemonToTrainer";
         private const string SuccessfulMessage = "Pokemon successfully added to user.";
         private const string UnsuccessfulMessage = "Trainer or pokemon not found.";
 
+        /// <summary>
+        /// Method to map add Pokemon to Trainer endpoint.
+        /// </summary>
+        /// <param name="app">Endpoint router builder.</param>
+        /// <returns>Json from <see cref="GenericResponse{T}"/>, <see cref="PokemonResponse"/> and OK status or error status.</returns>
         public static IEndpointRouteBuilder MapAddPokemonToTrainer(this IEndpointRouteBuilder app)
         {
             app.MapPost(ApiEndpoints.Trainers.AddPokemon, static async (

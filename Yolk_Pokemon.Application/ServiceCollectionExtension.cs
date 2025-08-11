@@ -10,6 +10,11 @@ namespace Yolk_Pokemon.Application
 {
     public static class ServiceCollectionExtension
     {
+        /// <summary>
+        /// Registration of services used for DI.
+        /// </summary>
+        /// <param name="services">Current service collection.</param>
+        /// <returns>Enhanced service collection.</returns>
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<ITrainersRepository, TrainersRepository>();
@@ -20,6 +25,12 @@ namespace Yolk_Pokemon.Application
             return services;
         }
 
+        /// <summary>
+        /// Registration of services used for database handling.
+        /// </summary>
+        /// <param name="services">Current service collection.</param>
+        /// <param name="connectionString">Database connection string.</param>
+        /// <returns>Enhanced service collection.</returns>
         public static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
         {
             services.AddScoped<IDbConnectionFactory>(_ => new NpgsqlConnectionFactory(connectionString));

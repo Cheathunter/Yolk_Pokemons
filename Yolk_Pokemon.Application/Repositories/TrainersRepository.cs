@@ -4,16 +4,22 @@ using Yolk_Pokemon.Application.Models;
 
 namespace Yolk_Pokemon.Application.Repositories
 {
+    /// <summary>
+    /// Entity framework repository for Trainers.
+    /// </summary>
+    /// <param name="context">Database context.</param>
     public class TrainersRepository(PokemonDbContext context) : ITrainersRepository
     {
         private readonly PokemonDbContext _context = context;
 
+        /// <inheritdoc/>
         public async Task CreateTrainerAsync(Trainer trainer, CancellationToken token = default)
         {
             await _context.Trainers.AddAsync(trainer, token);
             await _context.SaveChangesAsync(token);
         }
 
+        /// <inheritdoc/>
         public async Task<Trainer?> GetTrainerByIdAsync(int id, CancellationToken token = default)
         {
             var trainer = await _context.Trainers
@@ -26,6 +32,7 @@ namespace Yolk_Pokemon.Application.Repositories
             return trainer;
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<Trainer>> GetAllTrainersAsync(CancellationToken token = default)
         {
             return await _context.Trainers
@@ -36,6 +43,7 @@ namespace Yolk_Pokemon.Application.Repositories
                 .ToListAsync(token);
         }
 
+        /// <inheritdoc/>
         public async Task<bool> UpdateTrainerAsync(Trainer trainer, CancellationToken token = default)
         {
             var result = await _context.Trainers
@@ -52,6 +60,7 @@ namespace Yolk_Pokemon.Application.Repositories
             return result > 0;
         }
 
+        /// <inheritdoc/>
         public async Task<bool> DeleteByIdAsync(int id, CancellationToken token = default)
         {
             await _context.Pokemons
@@ -68,6 +77,7 @@ namespace Yolk_Pokemon.Application.Repositories
             return result > 0;
         }
 
+        /// <inheritdoc/>
         public async Task<int> GetLastTrainerIdAsync(CancellationToken token = default)
         {
             if (await _context.Trainers.AnyAsync(token))

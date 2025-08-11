@@ -6,10 +6,15 @@ using Yolk_Pokemon.Application.Models;
 
 namespace Yolk_Pokemon.Application.Repositories
 {
+    /// <summary>
+    /// Entity framework repository for Pokemons.
+    /// </summary>
+    /// <param name="context">Database context.</param>
     public class PokemonsRepository(PokemonDbContext context) : IPokemonsRepository
     {
         private readonly PokemonDbContext _context = context;
 
+        /// <inheritdoc/>
         public async Task CreatePokemonAsync(Pokemon pokemon, CancellationToken token = default)
         {
             bool exists = await _context.Pokemons.AnyAsync(p => p.Id == pokemon.Id, token);
@@ -30,6 +35,7 @@ namespace Yolk_Pokemon.Application.Repositories
             await _context.SaveChangesAsync(token);
         }
 
+        /// <inheritdoc/>
         public async Task<Pokemon?> GetPokemonByIdAsync(int id, CancellationToken token = default)
         {
             var pokemon = await _context.Pokemons
@@ -43,6 +49,7 @@ namespace Yolk_Pokemon.Application.Repositories
             return pokemon;
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(GetAllPokemonsOptions options, CancellationToken token = default)
         {
             IQueryable<Pokemon> query = _context.Pokemons
@@ -75,6 +82,7 @@ namespace Yolk_Pokemon.Application.Repositories
             return pokemons;
         }
 
+        /// <inheritdoc/>
         public async Task UpdatePokemonsOwnerAsync(int pokemonId, int trainerId, CancellationToken token = default)
         {
             await _context.Pokemons

@@ -5,26 +5,35 @@ using Yolk_Pokemon.Application.Repositories;
 
 namespace Yolk_Pokemon.Application.Services
 {
+    /// <summary>
+    /// Service for maintaining Pokemons.
+    /// </summary>
+    /// <param name="pokemonsRepository">Pokemon repository.</param>
+    /// <param name="trainersRepository">Trainer repository.</param>
     public class PokemonsService(IPokemonsRepository pokemonsRepository, ITrainersRepository trainersRepository) : IPokemonsService
     {
         private readonly IPokemonsRepository _pokemonsRepository = pokemonsRepository;
         private readonly ITrainersRepository _trainersRepository = trainersRepository;
 
+        /// <inheritdoc/>
         public async Task CreatePokemonAsync(Pokemon pokemon, CancellationToken token = default)
         {
             await _pokemonsRepository.CreatePokemonAsync(pokemon, token);
         }
 
+        /// <inheritdoc/>
         public async Task<Pokemon?> GetPokemonByIdAsync(int id, CancellationToken token = default)
         {
             return await _pokemonsRepository.GetPokemonByIdAsync(id, token);
         }
 
+        /// <inheritdoc/>
         public async Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(GetAllPokemonsOptions options, CancellationToken token = default)
         {
             return await _pokemonsRepository.GetAllPokemonsAsync(options, token);
         }
 
+        /// <inheritdoc/>
         public async Task<Trainer?> AddPokemonToTrainer(int pokemonId, int trainerId, CancellationToken token = default)
         {
             var trainer = await _trainersRepository.GetTrainerByIdAsync(trainerId, token);
