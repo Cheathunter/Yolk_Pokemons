@@ -2,6 +2,11 @@ using Yolk_Pokemon.Application;
 using Yolk_Pokemon.Api.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.ConfigureKestrel((context, options) =>
+{
+    options.Configure(context.Configuration.GetSection("Kestrel"));
+});
+
 var config = builder.Configuration;
 // Add services to the container.
 

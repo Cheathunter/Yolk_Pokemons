@@ -20,4 +20,10 @@
     <ProjectReference Include="..\Yolk_Pokemon.Application\Yolk_Pokemon.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="cert.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -9,3 +9,6 @@
 /Yolk_Pokemon.Api/bin/Debug/net9.0
 /Yolk_Pokemon.Application.Tests/obj
 /Yolk_Pokemon.Application.Tests/bin/Debug/net9.0
+/Yolk_Pokemon.Api/bin/Release/net9.0
+/Yolk_Pokemon.Application/bin/Release/net9.0
+/Yolk_Pokemon.Application.Tests/bin/Release/net9.0
