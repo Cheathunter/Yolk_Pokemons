@@ -46,6 +46,11 @@ namespace Yolk_Pokemon.Application.Repositories
         public async Task<IEnumerable<Pokemon>> GetAllPokemonsAsync(GetAllPokemonsOptions options, CancellationToken token = default)
         {
             IQueryable<Pokemon> query = _context.Pokemons
+                .AsNoTracking()
+                .Where(p =>
+                    (options.Type == null || EF.Functions.ILike(p.Type.Name, options.Type)) &&
+                    (options.Region == null || (p.Owner != null && p.Owner.Region != null && EF.Functions.ILike(p.Owner.Region, options.Region)))
+                )
                 .Include(p => p.PokemonMoves)
                     .ThenInclude(pm => pm.Move)
                         .ThenInclude(m => m.Type)

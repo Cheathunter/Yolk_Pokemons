@@ -123,6 +123,8 @@ namespace Yolk_Pokemon.Api.Mapping
 
             return new GetAllPokemonsOptions
             {
+                Type = request.Type,
+                Region = request.Region,
                 SortedField = sortOptions?.Length > 0 ? sortOptions[0] : null,
                 SortedOrder = sortOptions is null ? SortedOrder.Unsorted :
                 sortOptions.Length == 1 ? SortedOrder.Ascending :
