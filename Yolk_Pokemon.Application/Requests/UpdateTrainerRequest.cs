@@ -1,5 +1,4 @@
 ﻿
-using Yolk_Pokemon.Application.Models;
 
 namespace Yolk_Pokemon.Application.Requests
 {
@@ -14,7 +13,5 @@ namespace Yolk_Pokemon.Application.Requests
         public int Wins { get; init; }
 
         public int Losses { get; init; }
-
-        public virtual ICollection<Pokemon> Pokemons { get; init; } = [];
     }
 }

@@ -70,8 +70,7 @@ namespace Yolk_Pokemon.Api.Mapping
                 Region = request.Region,
                 Age = request.Age,
                 Wins = request.Wins,
-                Losses = request.Losses,
-                Pokemons = request.Pokemons
+                Losses = request.Losses
             };
         }
 
