@@ -55,6 +55,7 @@ namespace Yolk_Pokemon.Application.Repositories
             IQueryable<Pokemon> query = _context.Pokemons
                 .AsNoTracking()
                 .Where(p =>
+                    // apply filter
                     (options.Type == null || EF.Functions.ILike(p.Type.Name, options.Type)) &&
                     (options.Region == null || (p.Owner != null && p.Owner.Region != null && EF.Functions.ILike(p.Owner.Region, options.Region)))
                 )

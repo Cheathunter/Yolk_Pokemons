@@ -48,7 +48,7 @@ namespace Yolk_Pokemon.Application.Tests.Repositories
             var result = await _repository.GetTrainerByIdAsync(trainer.Id, CancellationToken.None);
 
             Assert.NotNull(result);
-            Assert.Equal(trainer.Id, trainer.Id);
+            Assert.Equal(trainer.Id, result.Id);
         }
 
         [Fact]
@@ -56,9 +56,9 @@ namespace Yolk_Pokemon.Application.Tests.Repositories
         {
             const int id = 0;
 
-            var document = await _repository.GetTrainerByIdAsync(id, CancellationToken.None);
+            var trainer = await _repository.GetTrainerByIdAsync(id, CancellationToken.None);
 
-            Assert.Null(document);
+            Assert.Null(trainer);
         }
 
         #endregion
@@ -93,8 +93,42 @@ namespace Yolk_Pokemon.Application.Tests.Repositories
             var result = await _repository.GetAllTrainersAsync(CancellationToken.None);
 
             Assert.Equal(2, result.Count());
-            Assert.Equal(result.ElementAt(0), trainer1);
-            Assert.Equal(result.ElementAt(1), trainer2);
+            Assert.Equal(trainer1, result.ElementAt(0));
+            Assert.Equal(trainer2, result.ElementAt(1));
+        }
+
+        #endregion
+
+        #region GetLastTrainerIdAsync
+
+        [Fact]
+        public async Task GetLastTrainerIdAsync_ShouldReturZero_WhenNoTrainerExist()
+        {
+            int lastTrainerId = await _repository.GetLastTrainerIdAsync(CancellationToken.None);
+
+            Assert.Equal(0, lastTrainerId);
+        }
+
+        [Fact]
+        public async Task GetLastTrainerIdAsync_ShouldReturnHighestId_WhenTrainersExist()
+        {
+            var trainer1 = new Trainer
+            {
+                Id = 3,
+                Name = "Ash"
+            };
+            var trainer2 = new Trainer
+            {
+                Id = 1,
+                Name = "Brok"
+            };
+
+            await _repository.CreateTrainerAsync(trainer1, CancellationToken.None);
+            await _repository.CreateTrainerAsync(trainer2, CancellationToken.None);
+
+            int lastTrainerId = await _repository.GetLastTrainerIdAsync(CancellationToken.None);
+
+            Assert.Equal(trainer1.Id, lastTrainerId);
         }
 
         #endregion

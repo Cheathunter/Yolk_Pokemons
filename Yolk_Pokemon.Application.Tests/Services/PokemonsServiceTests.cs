@@ -1,7 +1,5 @@
 ﻿
 using Moq;
-using System.ComponentModel.DataAnnotations;
-using System.Threading;
 using Yolk_Pokemon.Application.Exceptions;
 using Yolk_Pokemon.Application.Models;
 using Yolk_Pokemon.Application.Repositories;
