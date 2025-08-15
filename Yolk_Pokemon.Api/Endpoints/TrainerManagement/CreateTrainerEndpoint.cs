@@ -33,7 +33,8 @@ namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
                 return response.ToGenericResponse(SuccessfulMessage, StatusCodes.Status201Created);
             })
             .WithName(Name)
-            .Produces<GenericResponse<TrainerResponse>>(StatusCodes.Status201Created);
+            .Produces<GenericResponse<TrainerResponse>>(StatusCodes.Status201Created)
+            .Produces<GenericResponse<ValidationFailureResponse>>(StatusCodes.Status400BadRequest);
 
             return app;
         }

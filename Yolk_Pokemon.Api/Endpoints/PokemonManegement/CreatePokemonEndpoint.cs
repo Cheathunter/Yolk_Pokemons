@@ -43,6 +43,7 @@ namespace Yolk_Pokemon.Api.Endpoints.PokemonManegement
             })
             .WithName(Name)
             .Produces<GenericResponse<PokemonResponse>>(StatusCodes.Status201Created)
+            .Produces<GenericResponse<ValidationFailureResponse>>(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status409Conflict)
             .Produces(StatusCodes.Status406NotAcceptable);
 

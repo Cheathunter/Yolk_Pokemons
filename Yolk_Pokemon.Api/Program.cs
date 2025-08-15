@@ -1,5 +1,6 @@
 using Yolk_Pokemon.Application;
 using Yolk_Pokemon.Api.Endpoints;
+using Yolk_Pokemon.Api.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.WebHost.ConfigureKestrel((context, options) =>
@@ -30,7 +31,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseMiddleware<ValidationMappingMiddleware>();
 app.MapApiEndpoints();
 
 app.Run();

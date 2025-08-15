@@ -38,7 +38,8 @@ namespace Yolk_Pokemon.Api.Endpoints.TrainerManagement
             })
             .WithName(Name)
             .Produces<GenericResponse<TrainerResponse>>(StatusCodes.Status200OK)
-            .Produces(StatusCodes.Status404NotFound);
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces<GenericResponse<ValidationFailureResponse>>(StatusCodes.Status400BadRequest);
 
             return app;
         }

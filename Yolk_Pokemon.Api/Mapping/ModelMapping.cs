@@ -157,6 +157,17 @@ namespace Yolk_Pokemon.Api.Mapping
             };
         }
 
+        public static GenericResponse<T> MapToGenericResponse<T>(this T? data, string message, int statusCode, bool success = true)
+        {
+            return new GenericResponse<T>
+            {
+                Success = success,
+                StatusCode = statusCode,
+                Message = message,
+                Data = data is null ? null : [data]
+            };
+        }
+
         /// <summary>
         /// Extension method of <see cref="IResult"/>.
         /// Maps any response to JSon <see cref="GenericResponse{T}"/>.
@@ -168,13 +179,7 @@ namespace Yolk_Pokemon.Api.Mapping
         /// <returns>IResult object containing generic response.</returns>
         public static IResult ToGenericResponse<T>(this T? data, string message, int statusCode, bool success = true)
         {
-            var response = new GenericResponse<T>
-            {
-                Success = success,
-                StatusCode = statusCode,
-                Message = message,
-                Data = data is null ? null : [data]
-            };
+            var response = MapToGenericResponse(data, message, statusCode, success);
             return Results.Json(response, (JsonSerializerOptions?)null, null, statusCode);
         }
 
