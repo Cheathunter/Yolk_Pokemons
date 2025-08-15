@@ -1,4 +1,4 @@
-﻿
+﻿using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Yolk_Pokemon.Application.Context;
@@ -21,6 +21,7 @@ namespace Yolk_Pokemon.Application
             services.AddScoped<IPokemonsRepository, PokemonsRepository>();
             services.AddScoped<ITrainersService, TrainersService>();
             services.AddScoped<IPokemonsService, PokemonsService>();
+            services.AddValidatorsFromAssemblyContaining<IApplicationMarker>(ServiceLifetime.Scoped);
 
             return services;
         }

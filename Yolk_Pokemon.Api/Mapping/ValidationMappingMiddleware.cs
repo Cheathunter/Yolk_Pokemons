@@ -10,6 +10,7 @@ namespace Yolk_Pokemon.Api.Mapping
         private readonly RequestDelegate _next = next;
 
         private const string RequiredFieldNotFilledMessage = "Required field in the request was not filled.";
+        private const string FieldFilledInccorectlyMessage = "At least one of the fields not met requirements.";
 
         public async Task InvokeAsync(HttpContext context)
         {
@@ -29,7 +30,8 @@ namespace Yolk_Pokemon.Api.Mapping
                     })
                 };
 
-                await context.Response.WriteAsJsonAsync(validationFailureResponse);
+                await context.Response.WriteAsJsonAsync(validationFailureResponse
+                    .MapToGenericResponse(FieldFilledInccorectlyMessage, StatusCodes.Status400BadRequest, false));
             }
             catch (BadHttpRequestException ex)
             {
@@ -50,7 +52,7 @@ namespace Yolk_Pokemon.Api.Mapping
                 };
                 
                 await context.Response.WriteAsJsonAsync(validationFailureResponse
-                    .MapToGenericResponse(RequiredFieldNotFilledMessage, StatusCodes.Status400BadRequest));
+                    .MapToGenericResponse(RequiredFieldNotFilledMessage, StatusCodes.Status400BadRequest, false));
             }
         }
 

@@ -1,4 +1,6 @@
 ﻿
+using FluentValidation;
+using Yolk_Pokemon.Application.Validators;
 using Yolk_Pokemon.Application.Exceptions;
 using Yolk_Pokemon.Application.Models;
 using Yolk_Pokemon.Application.Repositories;
@@ -10,14 +12,18 @@ namespace Yolk_Pokemon.Application.Services
     /// </summary>
     /// <param name="pokemonsRepository">Pokemon repository.</param>
     /// <param name="trainersRepository">Trainer repository.</param>
-    public class PokemonsService(IPokemonsRepository pokemonsRepository, ITrainersRepository trainersRepository) : IPokemonsService
+    /// <param name="pokemonValidator">Validator for Pokemon - <see cref="PokemonValidator"/>.</param>
+    public class PokemonsService(IPokemonsRepository pokemonsRepository,
+        ITrainersRepository trainersRepository, IValidator<Pokemon> pokemonValidator) : IPokemonsService
     {
         private readonly IPokemonsRepository _pokemonsRepository = pokemonsRepository;
         private readonly ITrainersRepository _trainersRepository = trainersRepository;
+        private readonly IValidator<Pokemon> _pokemonValidator = pokemonValidator;
 
         /// <inheritdoc/>
         public async Task CreatePokemonAsync(Pokemon pokemon, CancellationToken token = default)
         {
+            await _pokemonValidator.ValidateAndThrowAsync(pokemon, token);
             await _pokemonsRepository.CreatePokemonAsync(pokemon, token);
         }
 
